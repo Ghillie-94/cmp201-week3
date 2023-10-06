@@ -112,18 +112,27 @@ void LinkedList<T>::Reverse()
 	// TODO: Assessed, 2 marks
 	//		1 mark for test with ints
 	//		1 mark for test with std:strings
+	
+	Node<T>* previous = head;
 	Node<T>* temp = head;
-	Node<T>* next = nullptr;
-	Node<T>* prev = nullptr;
-	while (temp != nullptr)
+	Node<T>* current = head->next;
+	Node<T>* tail = GetTail();
+	
+
+	previous->next = nullptr;
+	previous->prev = nullptr;
+
+	while (current != nullptr)
 	{
-		next = temp->next;
-		temp->next = prev;
-		prev = temp;
-		temp = next;
-		
+		temp = current->next;
+		current->next = previous;
+		previous->prev = current;
+		previous = current;
+		current = temp;
 	}
-	head = prev;
+	head = tail;
+
+	
 }
 
 // return count of elements in LL
@@ -264,4 +273,21 @@ int main()
 	llChar->Insert('c');
 	llChar->Reverse();		// reverse in place.
 	std::cout << "expecting [c, b, a], got: " << llChar->ToString();
+
+	LinkedList<char>* ll2 = new LinkedList<char>();
+	//test 4: Reversal
+	ll2->Insert('a');
+	ll2->Insert('b');
+	ll2->Insert('c');
+	ll2->Insert('d');
+	ll2->Insert('e');
+	ll2->Insert('f');
+	std::cout << ll2->ToString();
+	ll2->Reverse();
+	std::cout << ll2->ToString();
+
+	//test 5: int reversal
+	ll->Reverse();
+	std::cout << ll->ToString();
+
 }
